@@ -1,0 +1,374 @@
+/* ============================================================
+   MIRA Antigravity Design System — Design Tokens
+   Single source of truth. Version 1.0.
+   Theme: Dark (default) + Light (opt-in)
+   Architecture: Carbon-style 100+ token system (see KB ref)
+   Framework target: Tailwind CSS / DaisyUI / Vanilla CSS
+   ============================================================ */
+
+:root {
+  /* ——— BRAND ——— */
+  --brand-primary:          #3e5066;
+  --brand-primary-light:    #5b7fa5;
+  --brand-primary-dark:     #2c3a4d;
+  --brand-accent:           #64b5a0;
+  --brand-accent-gold:      #c9a84c;
+  --brand-accent-gold-dim:  #a88a3e;
+  --brand-dark:             #2c303c;
+  --brand-darkest:          #15181e;
+
+  /* ——— BACKGROUND ——— */
+  --bg:                     #15181e;
+  --bg-accent:              #171a22;
+  --bg-elevated:            #1a1e26;
+  --bg-hover:               #222833;
+  --bg-muted:               #1e232e;
+  --bg-card:                #1a1e26;
+  --bg-card-hover:          #222833;
+  --bg-overlay:             rgba(0, 0, 0, 0.6);
+  --bg-chrome:              rgba(21, 24, 30, 0.92);
+  --bg-chrome-solid:        #15181e;
+  --bg-tooltip:             #2c303c;
+
+  /* ——— SURFACE ——— */
+  --surface:                #1a1e26;
+  --surface-strong:         #222833;
+  --surface-hover:          #262b38;
+
+  /* ——— TEXT ——— */
+  --text:                   #dde3ed;
+  --text-strong:            #eef2f7;
+  --text-muted:             #8896a8;
+  --text-muted-strong:      #6b7a8e;
+  --text-inverse:           #15181e;
+  --text-link:              #5b7fa5;
+  --text-link-hover:        #7a9bc2;
+
+  /* ——— BORDER ——— */
+  --border:                 #222833;
+  --border-strong:          #2e3540;
+  --border-hover:           #3a4454;
+  --border-accent:          rgba(62, 80, 102, 0.3);
+  --border-accent-strong:   rgba(62, 80, 102, 0.5);
+
+  /* ——— ACCENTS ——— */
+  --accent:                 #3e5066;
+  --accent-hover:           #4d6380;
+  --accent-muted:           rgba(62, 80, 102, 0.6);
+  --accent-subtle:          rgba(62, 80, 102, 0.12);
+  --accent-glow:            rgba(62, 80, 102, 0.2);
+  --accent-foreground:      #eef2f7;
+
+  /* ——— SECONDARY (teal) ——— */
+  --secondary:              #64b5a0;
+  --secondary-hover:        #7cc9b5;
+  --secondary-muted:        rgba(100, 181, 160, 0.6);
+  --secondary-subtle:       rgba(100, 181, 160, 0.12);
+  --secondary-foreground:   #15181e;
+
+  /* ——— GOLD ACCENT ——— */
+  --gold:                   #c9a84c;
+  --gold-hover:             #dabf60;
+  --gold-muted:             rgba(201, 168, 76, 0.6);
+  --gold-subtle:            rgba(201, 168, 76, 0.12);
+  --gold-foreground:        #15181e;
+
+  /* ——— SEMANTIC ——— */
+  --ok:                     #4a7c59;
+  --ok-muted:               rgba(74, 124, 89, 0.7);
+  --ok-subtle:              rgba(74, 124, 89, 0.12);
+  --warn:                   #c9a84c;
+  --warn-muted:             rgba(201, 168, 76, 0.7);
+  --warn-subtle:            rgba(201, 168, 76, 0.12);
+  --danger:                 #c44545;
+  --danger-muted:           rgba(196, 69, 69, 0.7);
+  --danger-subtle:          rgba(196, 69, 69, 0.12);
+  --info:                   #5b7fa5;
+  --info-subtle:            rgba(91, 127, 165, 0.12);
+
+  /* ——— TYPOGRAPHY ——— */
+  --font-body:              "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display:           "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono:              "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  /* font scale */
+  --text-xs:                0.75rem;    /* 12px */
+  --text-sm:                0.8125rem;  /* 13px */
+  --text-base:              0.9375rem;  /* 15px */
+  --text-lg:                1.125rem;   /* 18px */
+  --text-xl:                1.375rem;   /* 22px */
+  --text-2xl:               1.75rem;    /* 28px */
+  --text-3xl:               2.25rem;    /* 36px */
+  --text-4xl:               3rem;       /* 48px */
+  --text-5xl:               3.75rem;    /* 60px */
+
+  --leading-tight:          1.15;
+  --leading-snug:           1.35;
+  --leading-normal:         1.55;
+  --leading-relaxed:        1.7;
+
+  --weight-normal:          400;
+  --weight-medium:          500;
+  --weight-semibold:        600;
+  --weight-bold:            700;
+  --weight-extrabold:       800;
+
+  /* ——— SPACING ——— */
+  --space-0:                0;
+  --space-1:                0.25rem;    /* 4px */
+  --space-2:                0.5rem;     /* 8px */
+  --space-3:                0.75rem;    /* 12px */
+  --space-4:                1rem;       /* 16px */
+  --space-5:                1.25rem;    /* 20px */
+  --space-6:                1.5rem;     /* 24px */
+  --space-8:                2rem;       /* 32px */
+  --space-10:               2.5rem;     /* 40px */
+  --space-12:               3rem;       /* 48px */
+  --space-16:               4rem;       /* 64px */
+  --space-20:               5rem;       /* 80px */
+  --space-24:               6rem;       /* 96px */
+
+  /* ——— BORDER RADIUS ——— */
+  --radius-sm:              0.375rem;   /* 6px */
+  --radius-md:              0.5rem;     /* 8px */
+  --radius-lg:              0.75rem;    /* 12px */
+  --radius-xl:              1rem;       /* 16px */
+  --radius-2xl:             1.5rem;     /* 24px */
+  --radius-full:            9999px;
+
+  /* ——— SHADOWS ——— */
+  --shadow-sm:              0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md:              0 4px 12px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.03);
+  --shadow-lg:              0 12px 28px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.03);
+  --shadow-xl:              0 24px 48px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.03);
+  --shadow-glow:            0 0 24px rgba(62, 80, 102, 0.25);
+  --shadow-glow-teal:       0 0 24px rgba(100, 181, 160, 0.2);
+
+  /* ———— TRANSITIONS ——— */
+  --ease-out:               cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:            cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring:            cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast:          120ms;
+  --duration-normal:        200ms;
+  --duration-slow:          350ms;
+
+  /* ——— COMPONENT ——— */
+  --btn-radius:             0.5rem;
+  --btn-padding-x:          1.25rem;
+  --btn-padding-y:          0.625rem;
+  --btn-font-size:          0.875rem;
+  --btn-font-weight:        600;
+
+  --card-radius:            0.75rem;
+  --card-padding:           1.5rem;
+  --card-border:            1px solid var(--border);
+
+  --input-radius:           0.5rem;
+  --input-padding-x:        0.875rem;
+  --input-padding-y:        0.625rem;
+  --input-bg:               var(--bg-hover);
+  --input-border:           1px solid var(--border-strong);
+
+  /* ——— GRID ——— */
+  --grid-gap:               1.5rem;
+  --grid-max-width:         72rem;      /* 1152px */
+
+  color-scheme: dark;
+}
+
+/* ——————————————————————————————————————————
+   LIGHT THEME (opt-in via data-theme="light")
+   —————————————————————————————————————————— */
+[data-theme="light"] {
+  --bg:                     #f7f8fa;
+  --bg-accent:              #f0f1f4;
+  --bg-elevated:            #ffffff;
+  --bg-hover:               #e8eaef;
+  --bg-muted:               #e8eaef;
+  --bg-card:                #ffffff;
+  --bg-card-hover:          #f7f8fa;
+  --bg-overlay:             rgba(0, 0, 0, 0.3);
+  --bg-chrome:              rgba(255, 255, 255, 0.92);
+  --bg-chrome-solid:        #ffffff;
+  --bg-tooltip:             #2c303c;
+
+  --surface:                #ffffff;
+  --surface-strong:         #f0f1f4;
+  --surface-hover:          #e8eaef;
+
+  --text:                   #2c303c;
+  --text-strong:            #15181e;
+  --text-muted:             #6b7a8e;
+  --text-muted-strong:      #8896a8;
+  --text-inverse:           #eef2f7;
+
+  --border:                 #dde1e8;
+  --border-strong:          #c5cbd4;
+  --border-hover:           #a8b0bc;
+
+  --shadow-sm:              0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md:              0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg:              0 12px 28px rgba(0, 0, 0, 0.1);
+  --shadow-xl:              0 24px 48px rgba(0, 0, 0, 0.12);
+
+  color-scheme: light;
+}
+
+/* ——————————————————————————————————————————
+   UTILITIES
+   —————————————————————————————————————————— */
+.mira-bg-grid {
+  background-image:
+    linear-gradient(rgba(62, 80, 102, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(62, 80, 102, 0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.mira-glow {
+  background: radial-gradient(ellipse 80% 60% at 50% -20%, rgba(62, 80, 102, 0.2) 0%, transparent 70%);
+}
+
+.mira-glow-teal {
+  background: radial-gradient(ellipse 80% 60% at 50% -20%, rgba(100, 181, 160, 0.15) 0%, transparent 70%);
+}
+
+.mira-gradient-text {
+  background: linear-gradient(135deg, var(--text-strong) 0%, var(--brand-primary-light) 50%, var(--brand-primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.mira-glow-line {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--brand-primary), var(--brand-primary-light), var(--brand-primary), transparent);
+  background-size: 200% 100%;
+  animation: mira-shimmer 3s ease-in-out infinite;
+}
+
+@keyframes mira-shimmer {
+  0%, 100% { background-position: 200% 0; }
+  50% { background-position: -200% 0; }
+}
+
+/* Fade-in animation */
+.mira-fade-in {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: mira-fade-up 0.5s ease forwards;
+}
+
+.mira-fade-in-d1 { animation-delay: 0.1s; }
+.mira-fade-in-d2 { animation-delay: 0.2s; }
+.mira-fade-in-d3 { animation-delay: 0.3s; }
+.mira-fade-in-d4 { animation-delay: 0.4s; }
+.mira-fade-in-d5 { animation-delay: 0.5s; }
+
+@keyframes mira-fade-up {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Button base */
+.mira-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  padding: var(--btn-padding-y) var(--btn-padding-x);
+  font-size: var(--btn-font-size);
+  font-weight: var(--btn-font-weight);
+  font-family: var(--font-body);
+  border-radius: var(--btn-radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-out);
+  line-height: 1.4;
+  text-decoration: none;
+}
+
+.mira-btn-primary {
+  background: var(--brand-primary);
+  color: var(--accent-foreground);
+  border-color: var(--brand-primary);
+}
+.mira-btn-primary:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.mira-btn-outline {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+.mira-btn-outline:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-hover);
+}
+
+.mira-btn-ghost {
+  background: transparent;
+  color: var(--text-muted);
+  border-color: transparent;
+}
+.mira-btn-ghost:hover {
+  color: var(--text);
+  background: var(--bg-hover);
+}
+
+/* Card */
+.mira-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--card-radius);
+  padding: var(--card-padding);
+  transition: all var(--duration-normal) var(--ease-out);
+}
+.mira-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-md);
+}
+
+/* Input */
+.mira-input {
+  display: block;
+  width: 100%;
+  padding: var(--input-padding-y) var(--input-padding-x);
+  font-size: var(--text-base);
+  font-family: var(--font-body);
+  color: var(--text);
+  background: var(--input-bg);
+  border: var(--input-border);
+  border-radius: var(--input-radius);
+  transition: border-color var(--duration-fast) var(--ease-out);
+  outline: none;
+}
+.mira-input:focus {
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 3px var(--accent-subtle);
+}
+
+/* Badge */
+.mira-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.625rem;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  border-radius: var(--radius-full);
+  line-height: 1.5;
+}
+.mira-badge-primary {
+  background: var(--accent-subtle);
+  color: var(--brand-primary);
+  border: 1px solid var(--border-accent);
+}
+.mira-badge-success {
+  background: var(--ok-subtle);
+  color: var(--ok);
+}
+.mira-badge-gold {
+  background: var(--gold-subtle);
+  color: var(--gold);
+}

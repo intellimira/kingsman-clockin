@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>Kingsman Group — Clock In/Out</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/jpeg" href="klogo.jpg">
+  <link rel="apple-touch-icon" href="klogo.jpg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+
+    <!-- ═══ Privacy Notice Modal (UK GDPR) ═══ -->
+    <div id="privacy-modal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <div class="modal-header">
+          <img src="klogo.jpg" alt="Kingsman" class="modal-logo">
+          <h2>Data & Privacy Notice</h2>
+          <p class="modal-subtitle">UK GDPR — Required Before Use</p>
+        </div>
+        <div class="modal-body">
+          <div class="privacy-section">
+            <h3>What We Collect</h3>
+            <ul>
+              <li><strong>Badge ID</strong> — Your Kingsman employee badge number</li>
+              <li><strong>Venue</strong> — Which site you're assigned to (self-selected)</li>
+              <li><strong>Timestamps</strong> — When you clock in and out</li>
+            </ul>
+          </div>
+          <div class="privacy-section">
+            <h3>Why We Collect It</h3>
+            <p>To verify your attendance at the assigned venue for <strong>payroll and client reporting</strong>. This is job verification, not performance monitoring.</p>
+          </div>
+          <div class="privacy-section">
+            <h3>How Long We Keep It</h3>
+            <p>Shift records are retained for <strong>24 months</strong>, then automatically deleted. You can request deletion at any time.</p>
+          </div>
+          <div class="privacy-section">
+            <h3>Who Can See It</h3>
+            <ul>
+              <li>You (your own shift history)</li>
+              <li>Your managers (John & Graham) — for payroll verification</li>
+            </ul>
+          </div>
+          <div class="privacy-section">
+            <h3>Your Rights</h3>
+            <ul>
+              <li><strong>Access</strong> — See all data we hold about you</li>
+              <li><strong>Export</strong> — Download your shift history as a CSV file</li>
+              <li><strong>Deletion</strong> — Request we delete all your data</li>
+              <li><strong>Complaint</strong> — Contact the ICO if you have concerns</li>
+            </ul>
+          </div>
+          <div class="privacy-section privacy-lawful">
+            <h3>Lawful Basis</h3>
+            <p>Processing is based on <strong>legitimate interests</strong> (Article 6(1)(f) UK GDPR) for job verification and payroll accuracy. A Legitimate Interests Assessment is on file.</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <label class="checkbox-label">
+            <input type="checkbox" id="privacy-accept">
+            <span>I have read and understood this privacy notice</span>
+          </label>
+          <button id="privacy-btn" class="mira-btn mira-btn-primary" disabled>
+            Continue to App
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ Header ═══ -->
+    <header id="header">
+      <div class="header-content">
+        <img src="klogo.jpg" alt="Kingsman" class="logo">
+        <div class="header-text">
+          <h1>Kingsman Group</h1>
+          <p class="subtitle">Security & Facilities Management</p>
+        </div>
+        <button id="settings-btn" class="icon-btn" aria-label="Settings">⚙</button>
+      </div>
+    </header>
+
+    <!-- ═══ Status Banner ═══ -->
+    <div id="status-banner" class="status-banner hidden">
+      <span id="status-icon"></span>
+      <span id="status-text"></span>
+    </div>
+
+    <!-- ═══ Main Content ═══ -->
+    <main id="main-content">
+
+      <!-- Badge + Venue Input -->
+      <section class="input-section">
+        <label for="badge-id">Badge Number</label>
+        <input type="text" id="badge-id" placeholder="e.g. KG-001" autocomplete="off" maxlength="20">
+        <label for="venue-select" style="margin-top:12px">Venue</label>
+        <select id="venue-select">
+          <option value="">— Select Venue —</option>
+        </select>
+      </section>
+
+      <!-- Clock In/Out Button -->
+      <section class="action-section">
+        <button id="clock-btn" class="clock-btn" disabled>
+          <span id="clock-btn-icon" class="btn-icon">▶</span>
+          <span id="clock-btn-text">CLOCK IN</span>
+          <span id="clock-btn-sub">Select venue & tap to start</span>
+        </button>
+      </section>
+
+      <!-- Current Shift Info (visible when clocked in) -->
+      <section id="shift-info" class="shift-info hidden">
+        <div class="shift-card">
+          <div class="shift-status" id="shift-status">CLOCKED IN</div>
+          <div class="shift-detail">
+            <span class="label">Venue:</span>
+            <span id="shift-venue">--</span>
+          </div>
+          <div class="shift-detail">
+            <span class="label">Time In:</span>
+            <span id="shift-time-in">--</span>
+          </div>
+          <div class="shift-detail">
+            <span class="label">Duration:</span>
+            <span id="shift-duration">00:00:00</span>
+          </div>
+          <div class="shift-detail shift-pay-row">
+            <span class="label">Earned:</span>
+            <span id="shift-pay" class="shift-pay-value">£0.00</span>
+          </div>
+          <div class="shift-id" id="shift-id">--</div>
+        </div>
+      </section>
+
+      <!-- ═══ Live Coverage Dashboard ═══ -->
+      <section class="coverage-section">
+        <h2>Venue Coverage <span class="section-hint">(live)</span></h2>
+        <div id="coverage-grid" class="coverage-grid"></div>
+      </section>
+
+      <!-- Recent Shifts -->
+      <section class="activity-section">
+        <h2>Recent Shifts</h2>
+        <div id="activity-list" class="activity-list">
+          <p class="empty-state">No shifts recorded yet</p>
+        </div>
+      </section>
+    </main>
+
+    <!-- ═══ Settings Panel ═══ -->
+    <div id="settings-panel" class="settings-panel hidden">
+      <div class="settings-header">
+        <h2>Settings & Data Rights</h2>
+        <button id="settings-close" class="icon-btn">✕</button>
+      </div>
+      <div class="settings-body">
+        <!-- Earnings Summary -->
+        <div class="settings-group">
+          <h3>Your Earnings</h3>
+          <div id="earnings-summary" class="earnings-summary"></div>
+        </div>
+
+        <div class="settings-group">
+          <h3>Your Data</h3>
+          <div class="settings-item">
+            <div>
+              <div class="settings-label">GPS Tracking</div>
+              <div class="settings-detail">Not used — venue is self-selected</div>
+            </div>
+            <span class="settings-badge badge-inactive">Off</span>
+          </div>
+          <div class="settings-item">
+            <div>
+              <div class="settings-label">Data Retention</div>
+              <div class="settings-detail">Auto-deleted after 24 months</div>
+            </div>
+            <span class="settings-badge">24 mo</span>
+          </div>
+          <div class="settings-item">
+            <div>
+              <div class="settings-label">Lawful Basis</div>
+              <div class="settings-detail">Legitimate interests — job verification</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-group">
+          <h3>Today's Schedule</h3>
+          <div id="schedule-list" class="schedule-list"></div>
+        </div>
+
+        <div class="settings-group">
+          <h3>Your Rights</h3>
+          <button id="export-btn" class="settings-action-btn">📥 Export My Shift History (CSV)</button>
+          <button id="privacy-review-btn" class="settings-action-btn">📄 Review Privacy Notice</button>
+          <button id="delete-btn" class="settings-action-btn danger">🗑️ Request Data Deletion</button>
+        </div>
+
+        <div class="settings-group">
+          <h3>Working Time</h3>
+          <div class="settings-item">
+            <div>
+              <div class="settings-label">Max Continuous Shift</div>
+              <div class="settings-detail">12 hours</div>
+            </div>
+          </div>
+          <div class="settings-item">
+            <div>
+              <div class="settings-label">Minimum Rest Between Shifts</div>
+              <div class="settings-detail">8 hours</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-group">
+          <h3>Compliance</h3>
+          <ul class="compliance-list">
+            <li>UK GDPR (Data Protection Act 2018)</li>
+            <li>Data (Use and Access) Act 2025</li>
+            <li>Working Time Regulations 1998</li>
+            <li>ICO Employee Monitoring Guidance</li>
+          </ul>
+          <p class="settings-desc" style="margin-top:8px;font-size:0.7rem;color:var(--text-muted)">
+            For concerns: ico.org.uk | DPO: dpo@kingsmangroup.co.uk
+          </p>
+        </div>
+
+        <!-- Manager Access Button -->
+        <div class="settings-group" style="text-align:center; padding-top: var(--space-4); border-top: 1px solid var(--border);">
+          <button id="admin-gate" class="settings-action-btn admin-gate-btn">🔒 Manager Access</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ Admin PIN Gate ═══ -->
+    <div id="admin-gate-panel" class="modal-overlay hidden">
+      <div class="modal-card modal-small">
+        <h2>Manager Access</h2>
+        <p>Enter your 4-digit PIN to access the admin panel.</p>
+        <input type="password" id="admin-pin" class="pin-input" maxlength="4" pattern="[0-9]*" inputmode="numeric" placeholder="PIN">
+        <p id="admin-pin-error" class="pin-error"></p>
+        <div class="modal-actions">
+          <button id="admin-pin-cancel" class="mira-btn mira-btn-outline">Cancel</button>
+          <button id="admin-pin-btn" class="mira-btn mira-btn-primary">Unlock</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ Admin Panel ═══ -->
+    <div id="admin-panel" class="admin-panel hidden">
+      <div class="admin-header">
+        <h2>Manager Panel</h2>
+        <div class="admin-header-actions">
+          <button id="admin-logout-btn" class="icon-btn" title="Lock admin">🔒</button>
+          <button id="admin-close" class="icon-btn">✕</button>
+        </div>
+      </div>
+
+      <div class="admin-body">
+        <!-- Active Shifts -->
+        <div class="admin-section">
+          <h3>Active Shifts Now</h3>
+          <div id="admin-active-list" class="admin-active-list">
+            <p class="empty-state">No active shifts</p>
+          </div>
+        </div>
+
+        <!-- Earnings Overview -->
+        <div class="admin-section">
+          <h3>Earnings Overview</h3>
+          <div id="admin-earnings" class="admin-earnings"></div>
+        </div>
+
+        <!-- Scheduler -->
+        <div class="admin-section">
+          <h3>Shift Scheduler</h3>
+          <div id="scheduler-form" class="scheduler-form">
+            <input type="text" id="sched-badge" placeholder="Badge (e.g. KG-001)" maxlength="20" class="sched-input">
+            <select id="sched-venue" class="sched-select"></select>
+            <select id="sched-day" class="sched-select sched-select-sm"></select>
+            <div class="sched-time-row">
+              <select id="sched-start" class="sched-select"></select>
+              <span class="sched-arrow">→</span>
+              <select id="sched-end" class="sched-select"></select>
+            </div>
+            <button id="sched-add-btn" class="mira-btn mira-btn-primary sched-add-btn">+ Add Shift</button>
+          </div>
+          <div id="sched-list" class="sched-list"></div>
+        </div>
+
+        <!-- Pay Rate -->
+        <div class="admin-section">
+          <h3>Pay Rate (Head Office)</h3>
+          <div class="rate-row">
+            <span class="rate-symbol">£</span>
+            <input type="number" id="rate-input" class="rate-input" step="0.25" min="0" value="12.50">
+            <span class="rate-unit">/hour</span>
+            <button id="rate-save-btn" class="mira-btn mira-btn-primary rate-save-btn">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ Delete Confirmation Modal ═══ -->
+    <div id="delete-modal" class="modal-overlay hidden">
+      <div class="modal-card modal-small">
+        <h2>Request Data Deletion</h2>
+        <p>This will permanently delete all your shift records, badge information, and venue data from this device and our servers.</p>
+        <p><strong>This action cannot be undone.</strong></p>
+        <div class="modal-actions">
+          <button id="delete-cancel" class="mira-btn mira-btn-outline">Cancel</button>
+          <button id="delete-confirm" class="mira-btn mira-btn-danger">Delete All My Data</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ Loading Overlay ═══ -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+      <div class="spinner"></div>
+      <p id="loading-text">Processing...</p>
+    </div>
+
+  </div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
