@@ -2,7 +2,7 @@
   "name": "Kingsman Group — Clock In/Out",
   "short_name": "Kingsman",
   "description": "Shift clock in/out for Kingsman Group security personnel",
-  "start_url": "/",
+  "start_url": ".",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#000000",

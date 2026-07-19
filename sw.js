@@ -4,15 +4,16 @@
    ============================================ */
 
 const CACHE_NAME = 'kingsman-clock-v1';
+const BASE = self.registration.scope;
 const ASSETS_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/style.css',
-  '/app.js',
-  '/config.js',
-  '/manifest.json',
-  '/klogo.jpg',
-];
+  '',
+  'index.html',
+  'style.css',
+  'app.js',
+  'config.js',
+  'manifest.json',
+  'klogo.jpg',
+].map((path) => new URL(path, BASE).href);
 
 // Install — Cache core assets
 self.addEventListener('install', (event) => {
@@ -75,7 +76,7 @@ self.addEventListener('fetch', (event) => {
       }).catch(() => {
         // Offline and not cached — return offline page if HTML
         if (event.request.headers.get('accept').includes('text/html')) {
-          return caches.match('/index.html');
+          return caches.match(new URL('index.html', BASE).href);
         }
       });
     })
